@@ -66,8 +66,9 @@
 
 				<configuration>
 
-                    <!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
-                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
+                    <!--<dockerHost>http://127.0.0.1:2375</dockerHost>--> <!-- use 'docker context ls' to retrieve these values -->
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost> <!-- wsl.exe -->
+                    <!--<dockerHost>npipe:////./pipe/dockerDesktopLinuxEngine</dockerHost>--> <!-- intelliJ -->
 
                     <verbose>true</verbose>
 					<images>
