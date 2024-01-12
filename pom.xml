@@ -72,7 +72,7 @@
                 <configuration>
 
                     <!--<dockerHost>http://127.0.0.1:2375</dockerHost>--> <!-- use 'docker context ls' to retrieve these values -->
-                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>--> <!-- wsl.exe -->
+                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>--> <!--wsl.exe-->
                     <dockerHost>npipe:////./pipe/dockerDesktopLinuxEngine</dockerHost> <!-- intelliJ -->
 
                     <verbose>true</verbose>
@@ -107,9 +107,10 @@
                                 </dependsOn>
                             </run>
                         </image>
+
                         <!--mysql container-->
                         <image>
-                            <name>mysql</name>
+                            <name>mysql:5.7</name>
                             <alias>mysqldb</alias>
                             <run>
                                 <!--expose port for dn-->
@@ -127,9 +128,10 @@
                                 </wait>
                             </run>
                         </image>
+
                         <!--rabbit container-->
                         <image>
-                            <name>rabbitmq</name>
+                            <name>rabbitmq:3.6-management</name>
                             <alias>myrabbitmq</alias>
                             <run>
                                 <ports>
@@ -147,9 +149,9 @@
 
                         <!--docker run &#45;&#45;name pageviewservice -p 8081:8081 &#45;&#45;link rabbitmq:rabbitmq &#45;&#45;link mysqldb:mysqldb-->
                         <!-- -e SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/pageviewservice -e SPRING_PROFILES_ACTIVE=mysql-->
-                        <!-- -e SPRING_RABBITMQ_HOST=rabbitmq springframeworkguru/pageviewservice-->
+                        <!-- -e SPRING_RABBITMQ_HOST=rabbitmq esalomon/pageviewservice-->
                         <image>
-                            <name>springframeworkguru/pageviewservice</name>
+                            <name>esalomon/pageviewservice</name>
                             <alias>pageviewservice</alias>
                             <run>
                                 <ports>
