@@ -67,13 +67,13 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.20.0</version>
+				<version>0.23.0</version>
 
                 <configuration>
 
                     <!--<dockerHost>http://127.0.0.1:2375</dockerHost>--> <!-- use 'docker context ls' to retrieve these values -->
-                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>--> <!--wsl.exe-->
-                    <dockerHost>npipe:////./pipe/dockerDesktopLinuxEngine</dockerHost> <!-- intelliJ -->
+                    <dockerHost>unix:///var/run/docker.sock</dockerHost> <!-- wsl.exe -->
+                    <!--<dockerHost>npipe:////./pipe/dockerDesktopLinuxEngine</dockerHost>--> <!-- intelliJ -->
 
                     <verbose>true</verbose>
                     <images>
@@ -136,7 +136,7 @@
                             <run>
                                 <ports>
                                     <port>5671</port>
-                                    <port>5672</port>
+                                    <port>5672:5672</port> <!-- the page-view-service starts working after update this. -->
                                     <port>4369</port>
                                     <port>25672</port>
                                 </ports>
@@ -161,8 +161,8 @@
                                     <link>myrabbitmq:rabbitmq</link>
                                     <link>mysqldb:mysqldb</link>
                                 </links>
-                                <env>
-                                    <SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/pageviewservice</SPRING_DATASOURCE_URL>
+                                <env> <!-- Source: https://stackoverflow.com/questions/34189756/warning-about-ssl-connection-when-connecting-to-mysql-database-->
+                                    <SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/pageviewservice?useSSL=false</SPRING_DATASOURCE_URL>
                                     <SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
                                     <SPRING_RABBITMQ_HOST>rabbitmq</SPRING_RABBITMQ_HOST>
                                 </env>
