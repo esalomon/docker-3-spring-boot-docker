@@ -134,7 +134,7 @@
                             <run>
                                 <ports>
                                     <port>5671</port>
-                                    <port>5672</port>
+                                    <port>5672:5672</port>  <!-- the page-view-service start working after update this. -->
                                     <port>4369</port>
                                     <port>25672</port>
                                 </ports>
@@ -147,9 +147,9 @@
 
                         <!--docker run &#45;&#45;name pageviewservice -p 8081:8081 &#45;&#45;link rabbitmq:rabbitmq &#45;&#45;link mysqldb:mysqldb-->
                         <!-- -e SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/pageviewservice -e SPRING_PROFILES_ACTIVE=mysql-->
-                        <!-- -e SPRING_RABBITMQ_HOST=rabbitmq springframeworkguru/pageviewservice-->
+                        <!-- -e SPRING_RABBITMQ_HOST=rabbitmq esalomon/pageviewservice-->
                         <image>
-                            <name>springframeworkguru/pageviewservice</name>
+                            <name>esalomon/pageviewservice</name>
                             <alias>pageviewservice</alias>
                             <run>
                                 <ports>
@@ -159,8 +159,8 @@
                                     <link>myrabbitmq:rabbitmq</link>
                                     <link>mysqldb:mysqldb</link>
                                 </links>
-                                <env>
-                                    <SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/pageviewservice</SPRING_DATASOURCE_URL>
+                                <env> <!-- Source: https://stackoverflow.com/questions/34189756/warning-about-ssl-connection-when-connecting-to-mysql-database-->
+                                    <SPRING_DATASOURCE_URL>jdbc:mysql://mysqldb:3306/pageviewservice?useSSL=false</SPRING_DATASOURCE_URL>
                                     <SPRING_PROFILES_ACTIVE>mysql</SPRING_PROFILES_ACTIVE>
                                     <SPRING_RABBITMQ_HOST>rabbitmq</SPRING_RABBITMQ_HOST>
                                 </env>
