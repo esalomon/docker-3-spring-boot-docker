@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mysqldb:
-    image: mysql
+    image: mysql:5.7
     restart: always
     ports:
       - '3306:3306'
@@ -11,7 +11,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
 
   rabbitmq:
-    image: rabbitmq
+    image: rabbitmq:3.6-management
     restart: always
     ports:
       - "5671:5671"
@@ -20,15 +20,15 @@ services:
       - "25672:25672"
 
   pageviewservice:
-    image: springframeworkguru/pageviewservice
+    image: esalomon/pageviewservice
     ports:
       - "8081:8081"
     restart: always
     depends_on:
       - mysqldb
       - rabbitmq
-    environment:
-      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysqldb:3306/pageviewservice'
+    environment: # Source: https://stackoverflow.com/questions/34189756/warning-about-ssl-connection-when-connecting-to-mysql-database
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://mysqldb:3306/pageviewservice?useSSL=false'
       SPRING_PROFILES_ACTIVE: 'mysql'
       SPRING_RABBITMQ_HOST: rabbitmq
     healthcheck:
@@ -38,7 +38,7 @@ services:
       retries: 3
 
   springbootdocker:
-    image: springframeworkguru/springbootdocker
+    image: esalomon/springbootdocker
     ports:
       - "8080:8080"
     restart: always
